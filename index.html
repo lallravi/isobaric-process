@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isobaric Process - Physics Sim by Lall Ravi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e293b;
+            --accent-red: #ef4444;
+            --accent-yellow: #facc15;
+            --accent-orange: #f97316;
+            --bg-slide: #ffffff;
+            --bg-page: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            background-color: var(--bg-page);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .slide-container {
+            background-color: var(--bg-slide);
+            width: 1280px;
+            height: 720px;
+            padding: 40px 60px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .branding {
+            position: absolute;
+            top: 30px;
+            right: 60px;
+            font-size: 18px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .header h1 {
+            font-size: 56px;
+            margin: 0;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            flex: 1;
+        }
+
+        /* SIMULATION STYLES */
+        .sim-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .visual-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            height: 380px;
+            border: 1px solid #e2e8f0;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-heat {
+            background-color: var(--primary);
+            color: white;
+            flex: 2;
+        }
+
+        .btn-heat:hover { background-color: #334155; transform: scale(1.02); }
+        .btn-heat:active { transform: scale(0.98); }
+
+        .btn-reset {
+            background-color: #e2e8f0;
+            color: var(--primary);
+            flex: 1;
+        }
+
+        /* TEXT AND MATH STYLES */
+        .text-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 35px;
+            font-size: 20px;
+            line-height: 1.5;
+            color: #334155;
+            margin-bottom: 15px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-size: 40px;
+            top: -10px;
+            color: black;
+        }
+
+        .math-middle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .equation-stack {
+            font-family: 'Lora', serif;
+            font-size: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .convention-card {
+            background-color: #ffb74d;
+            padding: 15px 25px;
+            border-radius: 4px;
+            font-size: 18px;
+            line-height: 1.6;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+
+        /* FOOTER FORMULAS */
+        .footer-formulas {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+        }
+
+        .yellow-box {
+            border: 4px solid var(--accent-yellow);
+            padding: 15px 40px;
+            font-family: 'Lora', serif;
+            font-size: 28px;
+            background: white;
+        }
+
+        .red-box-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .red-label {
+            font-size: 18px;
+            text-align: right;
+            width: 120px;
+            font-weight: 600;
+        }
+
+        .red-box {
+            border: 4px solid var(--accent-red);
+            padding: 12px 30px;
+            font-family: 'Lora', serif;
+            font-size: 28px;
+            background: white;
+        }
+
+        .arrow-right {
+            color: var(--accent-red);
+            font-size: 32px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide-container">
+    <div class="branding">Physics Sim by Lall Ravi</div>
+
+    <header class="header">
+        <div class="header-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+        </div>
+        <h1>Isobaric Expansion</h1>
+    </header>
+
+    <div class="content-layout">
+        <div class="sim-box">
+            <div class="visual-container">
+                <canvas id="pistonCanvas" width="180" height="340"></canvas>
+                <canvas id="graphCanvas" width="340" height="340"></canvas>
+            </div>
+            <div class="controls">
+                <button class="btn btn-heat" id="heatBtn">SUPPLY HEAT (Q)</button>
+                <button class="btn btn-reset" id="resetBtn">RESET</button>
+            </div>
+        </div>
+
+        <div class="text-box">
+            <ul class="bullet-list">
+                <li>Imagine heat (Q) supplied to a gas with a movable piston</li>
+                <li>Since the volume increases the gas does work by pushing the piston outward</li>
+                <li>Since the temperature (ΔT) increases the internal energy must increase (ΔU).</li>
+                <li>Thermal energy is added to the system (Q) to increase internal energy (ΔU) and to perform work (W).</li>
+            </ul>
+
+            <div class="math-middle-row">
+                <div class="equation-stack">
+                    <math display="block">
+                        <mi>W</mi><mo>=</mo><mi>P</mi><mi>Δ</mi><mi>V</mi>
+                    </math>
+                    <math display="block">
+                        <mi>Q</mi><mo>=</mo><mi>Δ</mi><mi>U</mi><mo>+</mo><mi>W</mi>
+                    </math>
+                </div>
+
+                <div class="convention-card">
+                    <strong>Q &gt; 0:</strong> Heat is added.<br>
+                    <strong>W &gt; 0:</strong> Work is done by the gas.<br>
+                    <strong>ΔU &gt; 0:</strong> Internal energy increases
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-formulas">
+        <div class="yellow-box">
+            <math display="block">
+                <mi>Δ</mi><mi>U</mi><mo>=</mo>
+                <mfrac><mn>3</mn><mn>2</mn></mfrac><mi>n</mi><mi>R</mi><mi>Δ</mi><mi>T</mi>
+                <mo>=</mo>
+                <mfrac><mn>3</mn><mn>2</mn></mfrac><mi>N</mi><msub><mi>k</mi><mi>B</mi></msub><mi>Δ</mi><mi>T</mi>
+            </math>
+        </div>
+
+        <div class="red-box-group">
+            <div class="red-label">Not in data booklet</div>
+            <div class="arrow-right">➔</div>
+            <div class="red-box">
+                <math display="block">
+                    <mi>Δ</mi><mi>U</mi><mo>=</mo>
+                    <mfrac><mn>3</mn><mn>2</mn></mfrac><mi>V</mi><mi>Δ</mi><mi>P</mi>
+                </math>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const pCanvas = document.getElementById('pistonCanvas');
+    const pCtx = pCanvas.getContext('2d');
+    const gCanvas = document.getElementById('graphCanvas');
+    const gCtx = gCanvas.getContext('2d');
+    const heatBtn = document.getElementById('heatBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let v_current = 140; // current height of gas
+    const v_min = 140;
+    const v_max = 280;
+    let isHeating = false;
+    let particles = [];
+
+    // Setup random gas particles
+    for (let i = 0; i < 30; i++) {
+        particles.push({
+            x: 25 + Math.random() * 130,
+            y: 310 - Math.random() * 130,
+            vx: (Math.random() - 0.5) * 2,
+            vy: (Math.random() - 0.5) * 2
+        });
+    }
+
+    function drawPiston() {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        
+        // Cylinder
+        pCtx.strokeStyle = '#334155';
+        pCtx.lineWidth = 4;
+        pCtx.beginPath();
+        pCtx.moveTo(20, 20);
+        pCtx.lineTo(20, 320);
+        pCtx.lineTo(160, 320);
+        pCtx.lineTo(160, 20);
+        pCtx.stroke();
+
+        // Gas (Light blue fill)
+        pCtx.fillStyle = '#bae6fd';
+        pCtx.fillRect(22, 320 - v_current, 136, v_current);
+
+        // Particles
+        pCtx.fillStyle = '#3b82f6';
+        particles.forEach(p => {
+            p.x += p.vx * (1 + (v_current - v_min) / 50);
+            p.y += p.vy * (1 + (v_current - v_min) / 50);
+
+            if (p.x < 25 || p.x > 155) p.vx *= -1;
+            if (p.y > 315 || p.y < (320 - v_current + 5)) p.vy *= -1;
+
+            pCtx.beginPath();
+            pCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+            pCtx.fill();
+        });
+
+        // Piston Head
+        pCtx.fillStyle = '#94a3b8';
+        pCtx.fillRect(18, 320 - v_current - 12, 144, 12);
+        pCtx.strokeStyle = '#1e293b';
+        pCtx.lineWidth = 2;
+        pCtx.strokeRect(18, 320 - v_current - 12, 144, 12);
+
+        // Labels
+        pCtx.fillStyle = '#0f172a';
+        pCtx.font = 'bold 16px Poppins';
+        pCtx.textAlign = 'center';
+        pCtx.fillText('area A', 90, 320 - v_current + 25);
+        pCtx.fillText('pressure P', 90, 320 - v_current/2);
+
+        // Work displacement indicator
+        if (v_current > v_min) {
+            pCtx.setLineDash([5, 5]);
+            pCtx.strokeStyle = '#64748b';
+            pCtx.beginPath();
+            pCtx.moveTo(170, 320 - v_min);
+            pCtx.lineTo(170, 320 - v_current);
+            pCtx.stroke();
+            pCtx.setLineDash([]);
+            pCtx.fillText('Δd', 170, 320 - (v_min + v_current)/2);
+        }
+
+        // Flame animation
+        if (isHeating) {
+            pCtx.fillStyle = '#f97316';
+            const flicker = Math.random() * 10;
+            pCtx.beginPath();
+            pCtx.moveTo(60, 340);
+            pCtx.quadraticCurveTo(90, 280 + flicker, 120, 340);
+            pCtx.fill();
+        }
+    }
+
+    function drawGraph() {
+        gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+        const ox = 50;
+        const oy = 290;
+        const w = 260;
+        const h = 240;
+
+        // Axes
+        gCtx.strokeStyle = '#334155';
+        gCtx.lineWidth = 2;
+        gCtx.beginPath();
+        gCtx.moveTo(ox, oy - h);
+        gCtx.lineTo(ox, oy);
+        gCtx.lineTo(ox + w, oy);
+        gCtx.stroke();
+
+        // Labels
+        gCtx.fillStyle = '#334155';
+        gCtx.font = 'italic 22px Lora';
+        gCtx.fillText('P', ox - 30, oy - h + 15);
+        gCtx.fillText('V', ox + w - 10, oy + 30);
+
+        // Plotting the line
+        const p_const = oy - 180;
+        const v_start = ox + 40;
+        const v_end = v_start + (v_current - v_min) * 1.5;
+
+        // Area under curve (Work)
+        if (v_current > v_min) {
+            gCtx.fillStyle = 'rgba(239, 68, 68, 0.1)';
+            gCtx.fillRect(v_start, p_const, v_end - v_start, oy - p_const);
+        }
+
+        // Line
+        gCtx.strokeStyle = '#ef4444';
+        gCtx.lineWidth = 4;
+        gCtx.beginPath();
+        gCtx.moveTo(v_start, p_const);
+        gCtx.lineTo(v_end, p_const);
+        gCtx.stroke();
+
+        // End points
+        gCtx.fillStyle = '#0f172a';
+        gCtx.beginPath(); gCtx.arc(v_start, p_const, 5, 0, 7); gCtx.fill();
+        gCtx.beginPath(); gCtx.arc(v_start + (v_max - v_min) * 1.5, p_const, 5, 0, 7); gCtx.fill();
+
+        gCtx.font = 'bold 18px Poppins';
+        gCtx.fillText('A', v_start - 5, p_const - 15);
+        gCtx.fillText('B', v_start + (v_max - v_min) * 1.5 - 5, p_const - 15);
+        
+        if (v_current > v_min + 10) {
+            // Arrowhead on graph
+            gCtx.beginPath();
+            gCtx.moveTo(v_end - 10, p_const - 6);
+            gCtx.lineTo(v_end, p_const);
+            gCtx.lineTo(v_end - 10, p_const + 6);
+            gCtx.stroke();
+        }
+    }
+
+    function loop() {
+        if (isHeating && v_current < v_max) {
+            v_current += 0.8;
+        }
+        drawPiston();
+        drawGraph();
+        requestAnimationFrame(loop);
+    }
+
+    heatBtn.addEventListener('mousedown', () => isHeating = true);
+    window.addEventListener('mouseup', () => isHeating = false);
+    heatBtn.addEventListener('touchstart', (e) => { e.preventDefault(); isHeating = true; });
+    window.addEventListener('touchend', () => isHeating = false);
+
+    resetBtn.addEventListener('click', () => {
+        v_current = v_min;
+        isHeating = false;
+    });
+
+    loop();
+</script>
+</body>
+</html>
