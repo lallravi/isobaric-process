@@ -31,7 +31,7 @@
             background-color: var(--bg-slide);
             width: 1280px;
             height: 720px;
-            padding: 40px 60px;
+            padding: 30px 50px; /* Reduced padding slightly */
             position: relative;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             display: flex;
@@ -41,9 +41,9 @@
 
         .branding {
             position: absolute;
-            top: 30px;
-            right: 60px;
-            font-size: 18px;
+            top: 20px;
+            right: 50px;
+            font-size: 16px;
             color: #64748b;
             font-weight: 600;
             text-transform: uppercase;
@@ -53,22 +53,22 @@
         .header {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .header-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border: 3px solid var(--primary);
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 20px;
+            margin-right: 15px;
         }
 
         .header h1 {
-            font-size: 56px;
+            font-size: 48px;
             margin: 0;
             font-weight: 600;
             color: #0f172a;
@@ -77,15 +77,16 @@
         .content-layout {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
-            gap: 40px;
+            gap: 30px;
             flex: 1;
+            min-height: 0; /* Important for flex child sizing */
         }
 
         /* SIMULATION STYLES */
         .sim-box {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         .visual-container {
@@ -93,24 +94,26 @@
             align-items: flex-end;
             justify-content: space-between;
             background: #f8fafc;
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
-            height: 380px;
+            height: 340px; /* Reduced from 380px to save space */
             border: 1px solid #e2e8f0;
         }
 
         canvas {
             display: block;
+            max-width: 100%;
+            height: auto;
         }
 
         .controls {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
         .btn {
-            padding: 14px 28px;
-            font-size: 18px;
+            padding: 12px 24px;
+            font-size: 16px;
             font-weight: 600;
             border: none;
             border-radius: 8px;
@@ -137,29 +140,30 @@
         .text-box {
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
 
         .bullet-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 30px 0;
+            margin: 0;
         }
 
         .bullet-list li {
             position: relative;
-            padding-left: 35px;
-            font-size: 20px;
-            line-height: 1.5;
+            padding-left: 30px;
+            font-size: 19px;
+            line-height: 1.4;
             color: #334155;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .bullet-list li::before {
             content: "•";
             position: absolute;
             left: 0;
-            font-size: 40px;
-            top: -10px;
+            font-size: 35px;
+            top: -8px;
             color: black;
         }
 
@@ -172,62 +176,64 @@
 
         .equation-stack {
             font-family: 'Lora', serif;
-            font-size: 32px;
+            font-size: 28px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
         .convention-card {
             background-color: #ffb74d;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 4px;
-            font-size: 18px;
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.5;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            width: 280px;
         }
 
         /* FOOTER FORMULAS */
         .footer-formulas {
-            margin-top: auto;
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
         }
 
         .yellow-box {
             border: 4px solid var(--accent-yellow);
-            padding: 15px 40px;
+            padding: 10px 30px;
             font-family: 'Lora', serif;
-            font-size: 28px;
+            font-size: 24px;
             background: white;
         }
 
         .red-box-group {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .red-label {
-            font-size: 18px;
+            font-size: 16px;
             text-align: right;
-            width: 120px;
+            width: 100px;
             font-weight: 600;
         }
 
         .red-box {
             border: 4px solid var(--accent-red);
-            padding: 12px 30px;
+            padding: 10px 25px;
             font-family: 'Lora', serif;
-            font-size: 28px;
+            font-size: 24px;
             background: white;
         }
 
         .arrow-right {
             color: var(--accent-red);
-            font-size: 32px;
+            font-size: 28px;
         }
     </style>
 </head>
@@ -238,7 +244,7 @@
 
     <header class="header">
         <div class="header-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                 <polyline points="14 2 14 8 20 8"></polyline>
                 <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -252,8 +258,8 @@
     <div class="content-layout">
         <div class="sim-box">
             <div class="visual-container">
-                <canvas id="pistonCanvas" width="180" height="340"></canvas>
-                <canvas id="graphCanvas" width="340" height="340"></canvas>
+                <canvas id="pistonCanvas" width="180" height="310"></canvas>
+                <canvas id="graphCanvas" width="340" height="310"></canvas>
             </div>
             <div class="controls">
                 <button class="btn btn-heat" id="heatBtn">SUPPLY HEAT (Q)</button>
@@ -319,17 +325,16 @@
     const heatBtn = document.getElementById('heatBtn');
     const resetBtn = document.getElementById('resetBtn');
 
-    let v_current = 140; // current height of gas
-    const v_min = 140;
-    const v_max = 280;
+    let v_current = 130; 
+    const v_min = 130;
+    const v_max = 260;
     let isHeating = false;
     let particles = [];
 
-    // Setup random gas particles
     for (let i = 0; i < 30; i++) {
         particles.push({
             x: 25 + Math.random() * 130,
-            y: 310 - Math.random() * 130,
+            y: 290 - Math.random() * 120,
             vx: (Math.random() - 0.5) * 2,
             vy: (Math.random() - 0.5) * 2
         });
@@ -338,67 +343,60 @@
     function drawPiston() {
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
         
-        // Cylinder
         pCtx.strokeStyle = '#334155';
         pCtx.lineWidth = 4;
         pCtx.beginPath();
         pCtx.moveTo(20, 20);
-        pCtx.lineTo(20, 320);
-        pCtx.lineTo(160, 320);
+        pCtx.lineTo(20, 300);
+        pCtx.lineTo(160, 300);
         pCtx.lineTo(160, 20);
         pCtx.stroke();
 
-        // Gas (Light blue fill)
         pCtx.fillStyle = '#bae6fd';
-        pCtx.fillRect(22, 320 - v_current, 136, v_current);
+        pCtx.fillRect(22, 300 - v_current, 136, v_current);
 
-        // Particles
         pCtx.fillStyle = '#3b82f6';
         particles.forEach(p => {
             p.x += p.vx * (1 + (v_current - v_min) / 50);
             p.y += p.vy * (1 + (v_current - v_min) / 50);
 
             if (p.x < 25 || p.x > 155) p.vx *= -1;
-            if (p.y > 315 || p.y < (320 - v_current + 5)) p.vy *= -1;
+            if (p.y > 295 || p.y < (300 - v_current + 5)) p.vy *= -1;
 
             pCtx.beginPath();
             pCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
             pCtx.fill();
         });
 
-        // Piston Head
         pCtx.fillStyle = '#94a3b8';
-        pCtx.fillRect(18, 320 - v_current - 12, 144, 12);
+        pCtx.fillRect(18, 300 - v_current - 12, 144, 12);
         pCtx.strokeStyle = '#1e293b';
         pCtx.lineWidth = 2;
-        pCtx.strokeRect(18, 320 - v_current - 12, 144, 12);
+        pCtx.strokeRect(18, 300 - v_current - 12, 144, 12);
 
-        // Labels
         pCtx.fillStyle = '#0f172a';
-        pCtx.font = 'bold 16px Poppins';
+        pCtx.font = 'bold 14px Poppins';
         pCtx.textAlign = 'center';
-        pCtx.fillText('area A', 90, 320 - v_current + 25);
-        pCtx.fillText('pressure P', 90, 320 - v_current/2);
+        pCtx.fillText('area A', 90, 300 - v_current + 20);
+        pCtx.fillText('pressure P', 90, 300 - v_current/2);
 
-        // Work displacement indicator
         if (v_current > v_min) {
             pCtx.setLineDash([5, 5]);
             pCtx.strokeStyle = '#64748b';
             pCtx.beginPath();
-            pCtx.moveTo(170, 320 - v_min);
-            pCtx.lineTo(170, 320 - v_current);
+            pCtx.moveTo(170, 300 - v_min);
+            pCtx.lineTo(170, 300 - v_current);
             pCtx.stroke();
             pCtx.setLineDash([]);
-            pCtx.fillText('Δd', 170, 320 - (v_min + v_current)/2);
+            pCtx.fillText('Δd', 172, 300 - (v_min + v_current)/2);
         }
 
-        // Flame animation
         if (isHeating) {
             pCtx.fillStyle = '#f97316';
-            const flicker = Math.random() * 10;
+            const flicker = Math.random() * 8;
             pCtx.beginPath();
-            pCtx.moveTo(60, 340);
-            pCtx.quadraticCurveTo(90, 280 + flicker, 120, 340);
+            pCtx.moveTo(60, 310);
+            pCtx.quadraticCurveTo(90, 260 + flicker, 120, 310);
             pCtx.fill();
         }
     }
@@ -406,11 +404,10 @@
     function drawGraph() {
         gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
         const ox = 50;
-        const oy = 290;
+        const oy = 260;
         const w = 260;
-        const h = 240;
+        const h = 220;
 
-        // Axes
         gCtx.strokeStyle = '#334155';
         gCtx.lineWidth = 2;
         gCtx.beginPath();
@@ -419,24 +416,20 @@
         gCtx.lineTo(ox + w, oy);
         gCtx.stroke();
 
-        // Labels
         gCtx.fillStyle = '#334155';
-        gCtx.font = 'italic 22px Lora';
+        gCtx.font = 'italic 20px Lora';
         gCtx.fillText('P', ox - 30, oy - h + 15);
-        gCtx.fillText('V', ox + w - 10, oy + 30);
+        gCtx.fillText('V', ox + w - 10, oy + 25);
 
-        // Plotting the line
-        const p_const = oy - 180;
+        const p_const = oy - 150;
         const v_start = ox + 40;
         const v_end = v_start + (v_current - v_min) * 1.5;
 
-        // Area under curve (Work)
         if (v_current > v_min) {
             gCtx.fillStyle = 'rgba(239, 68, 68, 0.1)';
             gCtx.fillRect(v_start, p_const, v_end - v_start, oy - p_const);
         }
 
-        // Line
         gCtx.strokeStyle = '#ef4444';
         gCtx.lineWidth = 4;
         gCtx.beginPath();
@@ -444,21 +437,19 @@
         gCtx.lineTo(v_end, p_const);
         gCtx.stroke();
 
-        // End points
         gCtx.fillStyle = '#0f172a';
         gCtx.beginPath(); gCtx.arc(v_start, p_const, 5, 0, 7); gCtx.fill();
         gCtx.beginPath(); gCtx.arc(v_start + (v_max - v_min) * 1.5, p_const, 5, 0, 7); gCtx.fill();
 
-        gCtx.font = 'bold 18px Poppins';
-        gCtx.fillText('A', v_start - 5, p_const - 15);
-        gCtx.fillText('B', v_start + (v_max - v_min) * 1.5 - 5, p_const - 15);
+        gCtx.font = 'bold 16px Poppins';
+        gCtx.fillText('A', v_start - 5, p_const - 12);
+        gCtx.fillText('B', v_start + (v_max - v_min) * 1.5 - 5, p_const - 12);
         
         if (v_current > v_min + 10) {
-            // Arrowhead on graph
             gCtx.beginPath();
-            gCtx.moveTo(v_end - 10, p_const - 6);
+            gCtx.moveTo(v_end - 10, p_const - 5);
             gCtx.lineTo(v_end, p_const);
-            gCtx.lineTo(v_end - 10, p_const + 6);
+            gCtx.lineTo(v_end - 10, p_const + 5);
             gCtx.stroke();
         }
     }
